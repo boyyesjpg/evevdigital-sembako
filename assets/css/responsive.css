@@ -144,25 +144,62 @@
     width: 100%;
   }
 
-
 }
 
+/* ==========================================================================
+   Mobile Optimization for UMKM Bento-Grid & CTA (360px - 414px)
+   ========================================================================== */
+@media only screen and (max-width: 480px){
+  /* 1. Prevent Horizontal Scrollbar */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
 
+  /* 2. Bento-Grid & Product Cards Collapsed Neatly */
+  .shop-six .shop-block-two,
+  .shop-block-two,
+  .bento-card,
+  .category-block-one {
+    width: 100% !important;
+    margin-bottom: 15px !important;
+  }
 
+  /* 3. Thumb-friendly Buttons (Min Height 44px - 48px) */
+  .theme-btn,
+  .btn,
+  a.theme-btn,
+  button[type="submit"],
+  .wa-order-btn {
+    min-height: 48px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    padding: 10px 20px !important;
+    border-radius: 12px !important;
+    touch-action: manipulation;
+  }
 
+  /* 4. Responsive Floating Template Switcher (Fit in 360px) */
+  #evev-template-switcher {
+    bottom: 15px !important;
+    padding: 6px 10px !important;
+    gap: 4px !important;
+    max-width: 94vw !important;
+    border-radius: 25px !important;
+  }
 
+  #evev-template-switcher > span {
+    display: none !important; /* Hide label to preserve space */
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
+  #evev-template-switcher .switcher-pill {
+    padding: 6px 10px !important;
+    font-size: 11px !important;
+    white-space: nowrap !important;
+  }
+}
 
 
