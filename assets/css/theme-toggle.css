@@ -1,45 +1,98 @@
 /* =====================================================================
-   EvEvDigital Dual Theme Engine (Dark & Light Mode) - Sektor 06 Sembako
+   EvEvDigital Dual Theme Engine (Dark & Light Mode) - WCAG AAA (> 7:1)
+   Sektor 06: EvEvSembako (Minimarket, Grosir & Delivery UMKM Indonesia)
    ===================================================================== */
 
 :root {
-  --theme-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-
-/* Light Mode (Default) */
-[data-theme="light"], body:not([data-theme="dark"]) {
+  color-scheme: light;
   --bg-primary: #ffffff;
   --bg-secondary: #f8fafc;
-  --bg-card: #ffffff;
-  --text-main: #1e293b;
-  --text-muted: #64748b;
-  --border-color: #e2e8f0;
+  --bg-surface: #ffffff;
+  --bg-elevated: #f1f5f9;
+  --text-main: #0f172a;        /* 17.85:1 on #FFFFFF */
+  --text-secondary: #334155;   /* 10.30:1 on #FFFFFF, 9.90:1 on #F8FAFC */
+  --text-accent: #065f46;      /* 7.68:1 on #FFFFFF */
+  --text-amber: #78350f;       /* 9.07:1 on #FFFFFF, 8.15:1 on #FEF3C7 */
+  --border-color: #cbd5e1;
+  --card-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
+  --btn-green-bg: #065f46;     /* 7.68:1 with #FFFFFF */
+  --btn-green-hover: #047857;
+  --btn-amber-bg: #f59e0b;     /* 8.31:1 with #0F172A */
+  --btn-amber-text: #0f172a;
 }
 
-/* Dark Mode Overrides */
+/* Smooth transition ONLY when actively toggling (prevents FOUC on load) */
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition: background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease !important;
+}
+
+/* Light Mode Explicit High-Contrast Guarantees */
+[data-theme="light"] body,
+body:not([data-theme="dark"]) {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+}
+
+[data-theme="light"] .sec-title h2,
+[data-theme="light"] .evev-prod-title a,
+[data-theme="light"] .evev-paket-title,
+[data-theme="light"] .shop-block-one .inner-box h4 a,
+[data-theme="light"] .shop-block-two .inner-box h5 a,
+[data-theme="light"] .category-block-one .inner-box h4 a {
+  color: #0f172a;
+}
+
+[data-theme="light"] .evev-cat-label,
+[data-theme="light"] .evev-prod-price,
+[data-theme="light"] .evev-paket-price,
+[data-theme="light"] .shop-block-two .inner-box h6 {
+  color: #065f46;
+}
+
+[data-theme="light"] .evev-paket-desc,
+[data-theme="light"] .evev-paket-header p,
+[data-theme="light"] .evev-paket-list li,
+[data-theme="light"] .category-block-one .inner-box span {
+  color: #334155;
+}
+
+/* =====================================================================
+   DARK MODE OVERRIDES — STRICT WCAG AAA CONTRAST (> 7:1)
+   ===================================================================== */
 [data-theme="dark"] {
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-card: #1e293b;
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
+  color-scheme: dark;
+  --bg-primary: #0b1120;
+  --bg-secondary: #0f172a;
+  --bg-surface: #151f32;
+  --bg-elevated: #1e293b;
+  --text-main: #f8fafc;        /* 18.00:1 on #0B1120, 15.76:1 on #151F32 */
+  --text-secondary: #cbd5e1;   /* 11.10:1 on #151F32 */
+  --text-accent: #4ade80;      /* 9.46:1 on #151F32 */
+  --text-amber: #fcd34d;       /* 11.43:1 on #151F32 */
   --border-color: #334155;
+  --card-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
 }
 
+[data-theme="dark"],
 [data-theme="dark"] body {
-  background-color: #0f172a !important;
+  background-color: #0b1120 !important;
   color: #f8fafc !important;
 }
 
 [data-theme="dark"] .page-wrapper,
 [data-theme="dark"] .boxed_wrapper,
 [data-theme="dark"] .main-header,
+[data-theme="dark"] .header-top,
 [data-theme="dark"] .header-upper,
 [data-theme="dark"] .header-lower,
 [data-theme="dark"] .sticky-header,
 [data-theme="dark"] .banner-section,
 [data-theme="dark"] .banner-style-two,
 [data-theme="dark"] .banner-style-three,
+[data-theme="dark"] .banner-style-four,
 [data-theme="dark"] .shop-section,
 [data-theme="dark"] .shop-style-two,
 [data-theme="dark"] .shop-style-three,
@@ -48,62 +101,162 @@
 [data-theme="dark"] .shop-style-six,
 [data-theme="dark"] .shop-style-seven,
 [data-theme="dark"] .shop-style-eight,
+[data-theme="dark"] .shop-style-nine,
 [data-theme="dark"] .deals-section,
 [data-theme="dark"] .cta-section,
 [data-theme="dark"] .cta-style-two,
 [data-theme="dark"] .category-section,
 [data-theme="dark"] .featured-section,
 [data-theme="dark"] .featured-style-two,
+[data-theme="dark"] .offers-section,
+[data-theme="dark"] .offers-style-two,
 [data-theme="dark"] .ads-section,
+[data-theme="dark"] .ads-style-two,
+[data-theme="dark"] .ads-style-three,
+[data-theme="dark"] .testimonial-section,
 [data-theme="dark"] .news-section,
 [data-theme="dark"] .highlights-section,
-[data-theme="dark"] .footer-top,
-[data-theme="dark"] .footer-bottom,
-[data-theme="dark"] .main-footer {
-  background-color: #0f172a !important;
+[data-theme="dark"] .highlights-section .bg-color,
+[data-theme="dark"] .evev-paket-section,
+[data-theme="dark"] .evev-grosir-section {
+  background-color: #0b1120 !important;
   color: #f8fafc !important;
 }
 
+[data-theme="dark"] .discount-section {
+  background-color: #151f32 !important;
+  border-bottom: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .discount-section p,
+[data-theme="dark"] .discount-section .cs-countdown,
+[data-theme="dark"] .header-top p,
+[data-theme="dark"] .header-top li,
+[data-theme="dark"] .header-top a {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .discount-section p span,
+[data-theme="dark"] .header-top .text span {
+  color: #4ade80 !important;
+}
+
+/* Surfaces & Cards in Dark Mode */
 [data-theme="dark"] .shop-block-one .inner-box,
 [data-theme="dark"] .shop-block-two .inner-box,
 [data-theme="dark"] .shop-block-three .inner-box,
 [data-theme="dark"] .category-block-one .inner-box,
 [data-theme="dark"] .feature-block-one .inner-box,
+[data-theme="dark"] .offers-block-one .inner-box,
+[data-theme="dark"] .deals-block-one .inner-box,
+[data-theme="dark"] .testimonial-block-one .inner-box,
+[data-theme="dark"] .highlights-block-one .inner-box,
 [data-theme="dark"] .news-block-one .inner-box,
+[data-theme="dark"] .evev-product-card,
+[data-theme="dark"] .evev-paket-card,
+[data-theme="dark"] .evev-grosir-table-wrap,
 [data-theme="dark"] .cart-menu,
 [data-theme="dark"] .cart-menu .cart-products,
-[data-theme="dark"] .cart-box,
+[data-theme="dark"] .category-menu .outer-box,
+[data-theme="dark"] .mobile-menu .menu-box,
+[data-theme="dark"] .category-box .category-list,
+[data-theme="dark"] .category-box .category-dropdown .list-inner,
+[data-theme="dark"] .main-menu .navigation > li > ul,
 [data-theme="dark"] .search-area,
 [data-theme="dark"] .search-box input,
+[data-theme="dark"] .location-box,
 [data-theme="dark"] .select-box .nice-select,
 [data-theme="dark"] .select-box .nice-select .list,
 [data-theme="dark"] .support-box,
 [data-theme="dark"] .card,
-[data-theme="dark"] .inner-box {
-  background-color: #1e293b !important;
+[data-theme="dark"] .offers-style-two .inner-container {
+  background-color: #151f32 !important;
   color: #f8fafc !important;
   border-color: #334155 !important;
 }
 
-[data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3,
-[data-theme="dark"] h4, [data-theme="dark"] h5, [data-theme="dark"] h6,
+[data-theme="dark"] .ads-block-one .inner-box,
+[data-theme="dark"] .banner-content-three .inner-box,
+[data-theme="dark"] .banner-content-four .inner-box,
+[data-theme="dark"] .shop-style-six .ads-block,
+[data-theme="dark"] .shop-style-three .ads-block,
+[data-theme="dark"] .cta-style-two .inner-container {
+  background-color: #151f32 !important;
+  border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .select-box .nice-select .option:hover,
+[data-theme="dark"] .select-box .nice-select .option.focus,
+[data-theme="dark"] .select-box .nice-select .option.selected.focus {
+  background-color: #1e293b !important;
+  color: #4ade80 !important;
+}
+
+/* Sharp High-Contrast Typography in Dark Mode (> 11:1) */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6,
 [data-theme="dark"] .sec-title h2,
+[data-theme="dark"] .evev-prod-title a,
+[data-theme="dark"] .evev-paket-title,
 [data-theme="dark"] .shop-block-one .inner-box h4 a,
 [data-theme="dark"] .shop-block-two .inner-box h5 a,
-[data-theme="dark"] .navigation > li > a {
+[data-theme="dark"] .category-block-one .inner-box h4 a,
+[data-theme="dark"] .news-block-one .lower-content h4 a,
+[data-theme="dark"] .navigation > li > a,
+[data-theme="dark"] .navigation > li > ul > li > a,
+[data-theme="dark"] .support-box a,
+[data-theme="dark"] .category-list li a,
+[data-theme="dark"] .menu-right-content .info-list li a {
   color: #f8fafc !important;
 }
 
 [data-theme="dark"] p,
-[data-theme="dark"] .text,
-[data-theme="dark"] span:not(.theme-toggle-btn):not(.btn):not(.price):not(.current):not(.badge):not(.footer-maker):not(.footer-maker *) {
+[data-theme="dark"] li,
+[data-theme="dark"] td,
+[data-theme="dark"] .evev-paket-desc,
+[data-theme="dark"] .evev-paket-header p,
+[data-theme="dark"] .evev-paket-list li,
+[data-theme="dark"] .evev-paket-list li span,
+[data-theme="dark"] .category-block-one .inner-box span,
+[data-theme="dark"] .post-info,
+[data-theme="dark"] .post-info a,
+[data-theme="dark"] .search-box input::placeholder,
+[data-theme="dark"] .select-box .nice-select .current {
   color: #cbd5e1 !important;
 }
 
+[data-theme="dark"] .sec-title a,
+[data-theme="dark"] .evev-cat-label,
+[data-theme="dark"] .evev-prod-price,
+[data-theme="dark"] .evev-paket-price,
 [data-theme="dark"] .price,
 [data-theme="dark"] .item-price,
-[data-theme="dark"] .current-price {
+[data-theme="dark"] .current-price,
+[data-theme="dark"] .shop-block-two .inner-box h6,
+[data-theme="dark"] .offers-style-two .text-list li span {
   color: #4ade80 !important;
+}
+
+[data-theme="dark"] .tab-btns .tab-btn {
+  background-color: #151f32 !important;
+  color: #cbd5e1 !important;
+  border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .tab-btns .tab-btn.active-btn,
+[data-theme="dark"] .tab-btns .tab-btn:hover {
+  background-color: #065f46 !important;
+  color: #ffffff !important;
+  border-color: #10b981 !important;
+}
+
+[data-theme="dark"] .logo-box img,
+[data-theme="dark"] .nav-logo img {
+  filter: brightness(0) invert(1);
 }
 
 [data-theme="dark"] .border-top,
@@ -113,169 +266,170 @@
   border-color: #334155 !important;
 }
 
-/* Theme Toggle Button */
+/* =====================================================================
+   THEME TOGGLE BUTTON (Accessible, Tactile, High-Contrast)
+   ===================================================================== */
 .theme-toggle-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  background-color: #ffffff;
-  color: #1e293b;
+  gap: 6px;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 12px;
+  border-radius: 50px;
+  border: 1.5px solid #cbd5e1;
+  background-color: #f8fafc;
+  color: #0f172a;
   cursor: pointer;
-  transition: all 0.25s ease;
-  font-size: 18px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-}
-
-[data-theme="dark"] .theme-toggle-btn {
-  background-color: #1e293b;
-  border-color: #334155;
-  color: #fbbf24;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .theme-toggle-btn:hover {
-  transform: scale(1.08);
+  transform: scale(1.06);
+  border-color: #065f46;
+  background-color: #ecfdf5;
+  color: #065f46;
 }
 
-/* Floating WhatsApp Button */
-.wa-floating, .wa-float-pill, .wa-floating-pill {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  z-index: 99999;
-  background-color: #25d366;
-  color: #ffffff !important;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 22px;
-  border-radius: 50px;
-  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45);
-  text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.theme-toggle-btn:focus-visible {
+  outline: 3px solid #10b981;
+  outline-offset: 2px;
 }
 
-.wa-floating:hover, .wa-float-pill:hover, .wa-floating-pill:hover {
-  background-color: #1eb857;
-  color: #ffffff !important;
-  transform: translateY(-4px) scale(1.04);
-  box-shadow: 0 12px 28px rgba(37, 211, 102, 0.6);
+[data-theme="dark"] .theme-toggle-btn {
+  background-color: #1e293b !important;
+  border-color: #475569 !important;
+  color: #fcd34d !important;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.45);
 }
 
-.wa-floating i, .wa-float-pill i, .wa-floating-pill i {
-  font-size: 20px;
+[data-theme="dark"] .theme-toggle-btn:hover {
+  background-color: #334155 !important;
+  border-color: #fcd34d !important;
 }
-
-/* Footer maker */
-.footer-maker {
-  font-size: 14px;
-  color: #64748b;
-}
-
-[data-theme="dark"] .footer-maker {
-  color: #94a3b8;
-}
-
-.footer-maker a {
-  color: #22c55e !important;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.footer-maker a:hover {
-  text-decoration: underline;
-}
-
 
 /* =====================================================================
-   🖼️ EVEVSEMBAKO VISUAL HELPERS & HIGH-CONTRAST SOLID FOOTER
+   VISUAL HELPERS & HIGH-CONTRAST SOLID DARK FOOTER
    ===================================================================== */
-.service-photo-wrap, .product-photo-wrap {
+.service-photo-wrap,
+.product-photo-wrap {
   position: relative;
   overflow: hidden;
   border-radius: 12px;
   margin-bottom: 16px;
 }
-.service-photo, .product-photo {
+
+.service-photo,
+.product-photo {
   width: 100%;
   height: 220px;
   object-fit: cover;
   display: block;
-  transition: transform 0.4s ease;
+  transition: transform 0.35s ease;
 }
+
 .service-card:hover .service-photo,
 .product-card:hover .product-photo,
 .feature-block:hover .service-photo {
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
-.icon-3d {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.22));
-  margin-bottom: 12px;
-}
+
 .service-price-tag {
   display: inline-block;
-  background: rgba(16, 185, 129, 0.12);
-  color: #10B981;
-  font-weight: 700;
+  background: #ecfdf5;
+  color: #065f46;
+  font-weight: 800;
   font-size: 15px;
   padding: 4px 14px;
   border-radius: 20px;
   margin-bottom: 12px;
 }
+
 [data-theme="dark"] .service-price-tag {
-  background: rgba(52, 211, 153, 0.2);
-  color: #34d399;
-}
-.badge-pill {
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  background: linear-gradient(135deg, #10B981, #059669);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  padding: 4px 12px;
-  border-radius: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  z-index: 2;
+  background: rgba(74, 222, 128, 0.16);
+  color: #4ade80 !important;
 }
 
-/* SOLID HIGH-CONTRAST DARK FOOTER */
-.main-footer, footer, .footer, .footer-top, .footer-bottom {
-  background-color: #070A0E !important;
-  color: #F1F5F9 !important;
+/* Solid High-Contrast Dark Footer (> 13:1) */
+.main-footer,
+footer.main-footer,
+.main-footer .widget-section,
+.main-footer .footer-bottom {
+  background-color: #070a0e !important;
+  color: #f1f5f9 !important;
 }
-.main-footer p, footer p, .footer p, .footer-top p, .footer-bottom p {
-  color: #E2E8F0 !important;
+
+.main-footer p,
+.main-footer li,
+.main-footer .copyright p {
+  color: #e2e8f0 !important;
   opacity: 1 !important;
 }
-.main-footer a, footer a, .footer a, .footer-top a, .footer-bottom a {
-  color: #CBD5E1 !important;
-}
-.main-footer a:hover, footer a:hover, .footer a:hover, .footer-top a:hover, .footer-bottom a:hover {
-  color: #38BDF8 !important;
-}
-.main-footer h1, .main-footer h2, .main-footer h3, .main-footer h4, .main-footer h5, .main-footer h6,
-footer h1, footer h2, footer h3, footer h4, footer h5, footer h6 {
-  color: #FFFFFF !important;
-}
-.footer-maker a {
-  color: #10B981 !important;
-  font-weight: 700 !important;
+
+.main-footer a {
+  color: #cbd5e1 !important;
 }
 
-/* Suppress Duplicate Floating WA */
-.wa-floating, .wa-float-pill, .whatsapp-float:not(.floating-wa-btn) {
+.main-footer a:hover {
+  color: #4ade80 !important;
+}
+
+.main-footer h1,
+.main-footer h2,
+.main-footer h3,
+.main-footer h4,
+.main-footer h5,
+.main-footer h6 {
+  color: #ffffff !important;
+}
+
+.main-footer .footer-logo img {
+  filter: brightness(0) invert(1);
+}
+
+/* Floating WhatsApp Button (Guaranteed High Contrast & Visible) */
+.floating-wa-btn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 99999;
+  background-color: #065f46;
+  color: #ffffff !important;
+  border: 2px solid #25d366;
+  border-radius: 50px;
+  padding: 12px 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 14px;
+  text-decoration: none;
+  box-shadow: 0 10px 28px rgba(6, 95, 70, 0.45);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.floating-wa-btn i {
+  font-size: 22px;
+  color: #4ade80 !important;
+}
+
+.floating-wa-btn span {
+  color: #ffffff !important;
+}
+
+.floating-wa-btn:hover {
+  background-color: #047857;
+  color: #ffffff !important;
+  transform: translateY(-2px) scale(1.04);
+}
+
+/* Suppress duplicate legacy floating WA classes */
+.wa-floating,
+.wa-float-pill,
+.whatsapp-float:not(.floating-wa-btn) {
   display: none !important;
 }

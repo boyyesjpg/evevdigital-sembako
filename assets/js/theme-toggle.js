@@ -1,61 +1,124 @@
 /**
- * EvEvDigital Dual Theme Toggle Engine (Dark / Light Mode)
- * Sektor 06: Warung Sembako & Minimarket
+ * EvEvDigital Dual Theme Toggle Engine (Dark / Light Mode) + Anti-FOUC
+ * Sektor 06: EvEvSembako (Minimarket, Grosir & Delivery UMKM)
  */
 
 (function () {
   'use strict';
 
   var THEME_KEY = 'evevdigital_theme_preference';
+  var root = document.documentElement;
 
-  function getPreferredTheme() {
-    var stored = localStorage.getItem(THEME_KEY);
-    if (stored) return stored;
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  function getStoredTheme() {
+    try {
+      var stored = localStorage.getItem(THEME_KEY);
+      if (stored === 'dark' || stored === 'light') {
+        return stored;
+      }
+    } catch (e) {}
+    return null;
   }
 
-  function applyTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    if (document.body) {
-      document.body.setAttribute('data-theme', theme);
+  function getPreferredTheme() {
+    var stored = getStoredTheme();
+    if (stored) return stored;
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
     }
-    localStorage.setItem(THEME_KEY, theme);
-    updateButtons(theme);
+    return 'light';
   }
 
   function updateButtons(theme) {
     var buttons = document.querySelectorAll('#theme-toggle, .theme-toggle-btn');
+    var isDark = theme === 'dark';
     buttons.forEach(function (btn) {
-      if (theme === 'dark') {
-        btn.innerHTML = '<i class="fas fa-sun"></i>';
-        btn.setAttribute('title', 'Ganti ke Mode Terang (Light Mode)');
-        btn.setAttribute('aria-label', 'Ganti ke Mode Terang');
-      } else {
-        btn.innerHTML = '<i class="fas fa-moon"></i>';
-        btn.setAttribute('title', 'Ganti ke Mode Gelap (Dark Mode)');
-        btn.setAttribute('aria-label', 'Ganti ke Mode Gelap');
-      }
+      btn.innerHTML = isDark
+        ? '<i class="fas fa-sun" aria-hidden="true"></i>'
+        : '<i class="fas fa-moon" aria-hidden="true"></i>';
+      btn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+      btn.setAttribute('title', isDark ? 'Ganti ke Mode Terang (Light Mode)' : 'Ganti ke Mode Gelap (Dark Mode)');
+      btn.setAttribute('aria-label', isDark ? 'Ganti ke Mode Terang' : 'Ganti ke Mode Gelap');
     });
   }
 
-  function toggleTheme() {
-    var current = document.documentElement.getAttribute('data-theme') || 'light';
-    var next = current === 'dark' ? 'light' : 'dark';
-    applyTheme(next);
+  function applyTheme(theme, persist, animate) {
+    var nextTheme = theme === 'dark' ? 'dark' : 'light';
+
+    if (animate) {
+      root.classList.add('theme-transitioning');
+      window.setTimeout(function () {
+        root.classList.remove('theme-transitioning');
+      }, 320);
+    }
+
+    root.setAttribute('data-theme', nextTheme);
+    root.style.colorScheme = nextTheme;
+    if (document.body) {
+      document.body.setAttribute('data-theme', nextTheme);
+    }
+
+    if (persist) {
+      try {
+        localStorage.setItem(THEME_KEY, nextTheme);
+      } catch (e) {}
+    }
+
+    updateButtons(nextTheme);
   }
 
-  // Init theme before DOM fully loads to prevent flash of wrong theme
-  var initTheme = getPreferredTheme();
-  document.documentElement.setAttribute('data-theme', initTheme);
+  function toggleTheme() {
+    var current = root.getAttribute('data-theme') || getPreferredTheme();
+    var next = current === 'dark' ? 'light' : 'dark';
+    applyTheme(next, true, true);
+  }
+
+  // Immediate Anti-FOUC application (runs synchronously when script loads)
+  var initialTheme = getPreferredTheme();
+  applyTheme(initialTheme, false, false);
+
+  // Expose public API for inline scripts or template controls
+  window.EVEV_THEME = {
+    get: function () {
+      return root.getAttribute('data-theme') || getPreferredTheme();
+    },
+    set: function (theme) {
+      applyTheme(theme, true, true);
+    },
+    toggle: toggleTheme
+  };
 
   document.addEventListener('DOMContentLoaded', function () {
-    applyTheme(initTheme);
+    // Sync body attribute & button icons
+    applyTheme(root.getAttribute('data-theme') || initialTheme, false, false);
 
+    // Delegate click events on any theme toggle button
     document.addEventListener('click', function (e) {
       var btn = e.target.closest('#theme-toggle, .theme-toggle-btn');
       if (btn) {
         e.preventDefault();
         toggleTheme();
+      }
+    });
+
+    // Follow system preference changes if user hasn't manually overridden
+    if (window.matchMedia) {
+      var mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      var onMediaChange = function (e) {
+        if (!getStoredTheme()) {
+          applyTheme(e.matches ? 'dark' : 'light', false, true);
+        }
+      };
+      if (typeof mediaQuery.addEventListener === 'function') {
+        mediaQuery.addEventListener('change', onMediaChange);
+      } else if (typeof mediaQuery.addListener === 'function') {
+        mediaQuery.addListener(onMediaChange);
+      }
+    }
+
+    // Sync theme across browser tabs
+    window.addEventListener('storage', function (e) {
+      if (e.key === THEME_KEY && (e.newValue === 'dark' || e.newValue === 'light')) {
+        applyTheme(e.newValue, false, true);
       }
     });
   });
